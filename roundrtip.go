@@ -13,6 +13,6 @@ type loggingRoundTripper struct {
 }
 
 func (l loggingRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
-	fmt.Fprintf(l.logger, "%s - %s %s %s", time.Now().Format(time.ANSIC), r.Method, r.RemoteAddr, r.URL)
+	fmt.Fprintf(l.logger, "%s - %s %s %s\n", time.Now().Format(time.ANSIC), r.Method, r.RemoteAddr, r.URL)
 	return l.next.RoundTrip(r)
 }
