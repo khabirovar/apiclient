@@ -1,3 +1,3 @@
-module gitlub.com/khabirovar/api-client
+module gitlub.com/khabirovar/apiclient
 
 go 1.23.1
