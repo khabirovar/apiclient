@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -116,5 +117,10 @@ func (ac *ApiClient) AddUser(name, job string) (int, error) {
 		return 0, err
 	}
 
-	return user.ID, nil
+	id, err := strconv.Atoi(user.ID)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }

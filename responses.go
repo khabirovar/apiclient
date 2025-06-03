@@ -28,6 +28,6 @@ type postData struct {
 type createdUser struct {
 	Name      string `json:"name"`
 	Job       string `json:"job"`
-	ID        int    `json:"id"`
+	ID        string `json:"id"`
 	CreatedAt time.Time
 }
