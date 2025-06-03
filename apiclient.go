@@ -116,6 +116,7 @@ func (ac *ApiClient) AddUser(name, job string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+	fmt.Printf("created user: %#v\n", user)
 
 	id, err := strconv.Atoi(user.ID)
 	if err != nil {
