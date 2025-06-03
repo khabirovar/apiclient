@@ -38,7 +38,20 @@ func NewApiClient(timeout time.Duration, token string) (*ApiClient, error) {
 
 func (ac *ApiClient) GetUser(id int) (User, error) {
 	url := fmt.Sprintf("https://%s/api/users/%d", HOSTNAME, id)
-	resp, err := ac.client.Get(url)
+	
+	// resp, err := ac.client.Get(url)
+	// if err != nil {
+	// 	return User{}, err
+	// }
+	
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return User{}, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("x-api-key", ac.token)
+
+	resp, err := ac.client.Do(req)
 	if err != nil {
 		return User{}, err
 	}
