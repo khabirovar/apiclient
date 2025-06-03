@@ -1,5 +1,7 @@
 package apiclient
 
+import "time"
+
 type userResponse struct {
 	User        User        `json:"data"`
 	SupportInfo SupportInfo `json:"support"`
@@ -16,4 +18,16 @@ type User struct {
 type SupportInfo struct {
 	URL  string `json:"url"`
 	Text string `json:"text"`
+}
+
+type postData struct {
+	Name string `json:"name"`
+	Job  string `json:"job"`
+}
+
+type createdUser struct {
+	Name      string `json:"name"`
+	Job       string `json:"job"`
+	ID        int    `json:"id"`
+	CreatedAt time.Time
 }
