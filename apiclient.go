@@ -15,9 +15,10 @@ const HOSTNAME = "reqres.in"
 
 type ApiClient struct {
 	client *http.Client
+	token  string
 }
 
-func NewApiClient(timeout time.Duration) (*ApiClient, error) {
+func NewApiClient(timeout time.Duration, token string) (*ApiClient, error) {
 	if timeout == 0 {
 		return nil, errors.New("timeout can't be zero")
 	}
@@ -30,6 +31,7 @@ func NewApiClient(timeout time.Duration) (*ApiClient, error) {
 				next:   http.DefaultTransport,
 			},
 		},
+		token: token,
 	}, nil
 }
 
@@ -90,6 +92,7 @@ func (ac *ApiClient) AddUser(name, job string) (int, error) {
 		return 0, err
 	}
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("x-api-key", ac.token)
 
 	resp, err := ac.client.Do(req)
 	if err != nil {
@@ -98,7 +101,7 @@ func (ac *ApiClient) AddUser(name, job string) (int, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusCreated {
-		return 0, errors.New(fmt.Sprintf("Request status code: %d\n", resp.StatusCode))
+		return 0, fmt.Errorf("request status code: %d", resp.StatusCode)
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
